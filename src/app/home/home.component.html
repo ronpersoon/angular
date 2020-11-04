@@ -1,0 +1,10 @@
+<span id="title">Posts</span>
+<div *ngFor="let blogPost of blogPosts">
+  <h3> {{ blogPost.title }} </h3>
+  <p>
+    {{ blogPost.text }}
+  </p>
+  <p>
+    by {{ blogPost.author }}
+  </p>
+</div>
