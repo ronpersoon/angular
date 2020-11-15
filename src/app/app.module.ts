@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import {environment} from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AppRoutingModule,
     NgxsModule.forRoot([AppState],  {

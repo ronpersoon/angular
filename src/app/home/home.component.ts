@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Select, Store} from '@ngxs/store';
+import { Store} from '@ngxs/store';
 import {BlogPost} from '../app.model';
 import {GetBlogPosts} from '../core/blogpost/blogpost.actions';
 
@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetBlogPosts()).subscribe((response) => {
-      console.log(response);
-      this.blogPosts = response;
+      this.blogPosts = response.app.blogPosts;
     } );
   }
 

@@ -27,6 +27,6 @@ export class AppState {
 
   @Action(GetBlogPosts)
   getBlogPosts({ patchState }: StateContext<AppStateModel>) {
-    return this.blogPostService.getBlogPosts();
+    return this.blogPostService.getBlogPosts().pipe(tap(blogPosts => patchState({ blogPosts })));
   }
 }
