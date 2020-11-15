@@ -1,10 +1,10 @@
-<span id="title">Posts</span>
-<div *ngFor="let blogPost of blogPosts">
-  <h3> {{ blogPost.title }} </h3>
-  <p>
-    {{ blogPost.text }}
-  </p>
-  <p>
-    by {{ blogPost.author }}
-  </p>
-</div>
+<h1 id="title">Posts</h1>
+<mat-list>
+  <mat-list-item *ngFor="let blogPost of blogPosts">
+    <h1 matLine class="blogTitle"> {{ blogPost.title }} </h1>
+    <p matLine class="blogContent"> {{ blogPost.text }} </p>
+    <p matLine class="blogDate"> {{blogPost.date}} </p>
+    <p matLine class="blogAuthor"> {{ blogPost.author }} </p>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
