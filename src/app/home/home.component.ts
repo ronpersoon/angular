@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Store} from '@ngxs/store';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngxs/store';
 import {BlogPost} from '../app.model';
 import {GetBlogPosts} from '../core/blogpost/blogpost.actions';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -12,12 +14,16 @@ export class HomeComponent implements OnInit {
 
   blogPosts: BlogPost[];
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.store.dispatch(new GetBlogPosts()).subscribe((response) => {
       this.blogPosts = response.app.blogPosts;
-    } );
+    });
   }
 
+  CreateNewBlogPost() {
+    this.router.navigate(['/new-blogpost']);
+  }
 }

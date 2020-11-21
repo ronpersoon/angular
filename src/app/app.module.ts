@@ -10,12 +10,15 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
+import { NewBlogpostComponent } from './home/new-blogpost/new-blogpost.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    NewBlogpostComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import {MatListModule} from '@angular/material/list';
     }),
     BrowserAnimationsModule,
     MatListModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
