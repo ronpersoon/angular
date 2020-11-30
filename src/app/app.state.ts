@@ -3,7 +3,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {BlogPost} from './app.model';
 import {tap} from 'rxjs/operators';
 import {BlogPostService} from './core/blogpost/blogpost.service';
-import {CreateBlogPost, GetBlogPosts} from './core/blogpost/blogpost.actions';
+import {CreateBlogPost, DeleteBlogPost, GetBlogPosts} from './core/blogpost/blogpost.actions';
 
 export interface AppStateModel {
   blogPosts: BlogPost[];
@@ -46,8 +46,23 @@ export class AppState {
           newBlogPost
         ]
       });
+    }));
+  }
 
-      const newCurrentPosts = ctx.getState().blogPosts;
+  @Action(DeleteBlogPost)
+  deleteBlogPost(ctx: StateContext<AppStateModel>, blogPostId: number) {
+    return this.blogPostService.deleteBlogPost(blogPostId).pipe(tap(result => {
+
+      const currentPosts = ctx.getState().blogPosts;
+      const updatedPosts = currentPosts.filter(({id}) => id !== result.blogPostId);
+
+      ctx.patchState({
+        blogPosts: [
+          ...updatedPosts
+        ]
+      });
+
+      return updatedPosts;
     }));
   }
 }

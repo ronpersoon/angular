@@ -22,9 +22,9 @@ export class NewBlogpostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  CreateBlogPost() {
+  createBlogPost() {
     const newBlogPost = {
-      id: this.blogPostId.nativeElement.value,
+      id: Math.floor(Math.random() * 9999999) + 1,
       title: this.blogPostTitle.nativeElement.value,
       text: this.blogPostText.nativeElement.value,
       author: this.blogPostAuthor.nativeElement.value,
@@ -32,7 +32,11 @@ export class NewBlogpostComponent implements OnInit {
     };
 
     this.store.dispatch(new CreateBlogPost(newBlogPost)).subscribe(() => {
-      this.router.navigate(['']);
+      this.returnToRoot();
     });
+  }
+
+  returnToRoot() {
+    this.router.navigate(['']);
   }
 }

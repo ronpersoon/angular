@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {BlogPost} from '../app.model';
-import {GetBlogPosts} from '../core/blogpost/blogpost.actions';
+import {DeleteBlogPost, GetBlogPosts} from '../core/blogpost/blogpost.actions';
 import {Router} from '@angular/router';
 
 
@@ -23,7 +23,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  CreateNewBlogPost() {
+  createNewBlogPost() {
     this.router.navigate(['/new-blogpost']);
+  }
+
+  deleteBlogPost(blogPostId: number) {
+    this.store.dispatch(new DeleteBlogPost(blogPostId)).subscribe((response) => {
+      this.blogPosts = response.app.blogPosts;
+    });
   }
 }

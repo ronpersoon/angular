@@ -7,7 +7,13 @@ export class GetBlogPosts {
 export class CreateBlogPost {
   static readonly type = '[AppState] Create Blog Post';
 
-  // constructor(public date: string, public author: string, public id: number, public text: string, public title: string) { }
   constructor(public blogPost: BlogPost) {
+  }
+}
+
+export class DeleteBlogPost {
+  static readonly type = '[AppState] Delete Blog Post';
+
+  constructor(public blogPostId: number) {
   }
 }

@@ -1,7 +1,13 @@
-Id: <input #blogPostId> <br/>
-Title: <input #blogPostTitle><br/>
-Text: <input #blogPostText><br/>
-Author: <input #blogPostAuthor><br/>
-Date: <input #blogPostDate><br/>
+<label class="testter" for="blogPostId">Id</label>
+<input type="text" disabled name="blogPostId" id="blogPostId" #blogPostId><br>
+<label for="blogPostTitle">Title</label>
+<input type="text" name="blogPostTitle" id="blogPostTitle" #blogPostTitle><br>
+<label for="blogPostText">Text</label>
+<input type="text" name="blogPostText" id="blogPostText" #blogPostText><br>
+<label for="blogPostAuthor">Author</label>
+<input type="text" name="blogPostAuthor" id="blogPostAuthor" #blogPostAuthor><br>
+<label for="blogPostDate">Date</label>
+<input type="date" name="blogPostDate" id="blogPostDate" #blogPostDate><br><br>
 
-<button mat-button color="primary" (click)="CreateBlogPost()">Create</button>
+<button mat-button color="secundary" (click)="returnToRoot()">Cancel</button>
+<button mat-button color="primary" (click)="createBlogPost()">Create</button>
