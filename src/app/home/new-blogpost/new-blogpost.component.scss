@@ -1,4 +1,18 @@
-label {
-  display: inline-block;
-  width: 60px;
+#newBlogPostContainer
+{
+  padding:50px;
+}
+
+.newBlogPostForm {
+  min-width: 150px;
+  max-width: 500px;
+}
+
+.newBlogPostFullWidth {
+  width: 100%;
+}
+
+.newBlogPostButtons {
+  margin-top:20px;
+  margin-right:20px;
 }
