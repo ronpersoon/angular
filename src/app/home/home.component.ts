@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngxs/store';
+import {Store, Select} from '@ngxs/store';
 import {BlogPost} from '../app.model';
 import {DeleteBlogPost, GetBlogPosts} from '../core/blogpost/blogpost.actions';
 import {Router} from '@angular/router';
-
+import {Observable} from 'rxjs';
+import {AppState} from '../app.state';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +13,13 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  blogPosts: BlogPost[];
+  @Select(AppState.blogPosts) blogPosts$: Observable<BlogPost[]>;
 
   constructor(private store: Store, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetBlogPosts()).subscribe((response) => {
-      this.blogPosts = response.app.blogPosts;
-    });
+    this.store.dispatch(new GetBlogPosts());
   }
 
   createNewBlogPost() {
@@ -28,8 +27,8 @@ export class HomeComponent implements OnInit {
   }
 
   deleteBlogPost(blogPostId: number) {
-    this.store.dispatch(new DeleteBlogPost(blogPostId)).subscribe((response) => {
-      this.blogPosts = response.app.blogPosts;
-    });
+    if (confirm(`Are you sure you want to remove this blog post?`)) {
+      this.store.dispatch(new DeleteBlogPost(blogPostId));
+    }
   }
 }

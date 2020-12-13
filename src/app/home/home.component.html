@@ -2,7 +2,7 @@
   <h1 id="title">Posts</h1>
   <mat-list>
     <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let blogPost of blogPosts">
+    <mat-list-item *ngFor="let blogPost of blogPosts$ | async">
       <h1 matLine class="blogTitle"> {{ blogPost.title }} </h1>
       <p matLine class="blogContent"> {{ blogPost.text }} </p>
       <p matLine class="blogDate"> {{blogPost.date}} </p>
