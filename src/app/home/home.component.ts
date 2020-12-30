@@ -31,4 +31,8 @@ export class HomeComponent implements OnInit {
       this.store.dispatch(new DeleteBlogPost(blogPostId));
     }
   }
+
+  editBlogPost(id: number) {
+    this.router.navigate(['/new-blogpost', id]);
+  }
 }

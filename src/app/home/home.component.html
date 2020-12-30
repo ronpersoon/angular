@@ -8,6 +8,7 @@
       <p matLine class="blogDate"> {{blogPost.date}} </p>
       <p matLine class="blogAuthor"> {{ blogPost.author }} </p>
       <button mat-button color="primary" (click)="deleteBlogPost(blogPost.id)">Delete</button>
+      <button mat-button color="primary" (click)="editBlogPost(blogPost.id)">Edit</button>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>

@@ -1,14 +1,20 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {NewBlogpostComponent} from './home/new-blogpost/new-blogpost.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  {path: '', component: HomeComponent},
   {
     path: 'new-blogpost',
-    component: NewBlogpostComponent
+    component: NewBlogpostComponent,
+    data: {mode: 'add'}
+  },
+  {
+    path: 'new-blogpost/:blogPostId',
+    component: NewBlogpostComponent,
+    data: {mode: 'edit'}
   },
   {
     path: 'login',
@@ -20,4 +26,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

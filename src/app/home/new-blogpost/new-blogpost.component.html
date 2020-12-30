@@ -1,32 +1,34 @@
-
 <div id="newBlogPostContainer">
-<h2>Create new blog post</h2>
-<form class="newBlogPostForm">
-  <mat-form-field style="display: none" class="newBlogPostFullWidth">
-    <mat-label for="blogPostId">Id</mat-label>
-    <input matInput type="text" disabled name="blogPostId" id="blogPostId" #blogPostId><br>
-  </mat-form-field>
-  <mat-form-field class="newBlogPostFullWidth">
-    <mat-label for="blogPostTitle">Title</mat-label>
-    <input matInput type="text" name="blogPostTitle" id="blogPostTitle" #blogPostTitle><br>
-  </mat-form-field>
-  <mat-form-field class="newBlogPostFullWidth">
-    <mat-label for="blogPostText">Text</mat-label>
-    <input matInput type="text" name="blogPostText" id="blogPostText" #blogPostText><br>
-  </mat-form-field>
-  <mat-form-field class="newBlogPostFullWidth">
-    <mat-label for="blogPostAuthor">Author</mat-label>
-    <input matInput type="text" name="blogPostAuthor" id="blogPostAuthor" #blogPostAuthor><br>
-  </mat-form-field>
-  <mat-form-field class="newBlogPostFullWidth">
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" #blogPostDate>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</form>
+  <h2>Create new blog post</h2>
+  <form class="newBlogPostForm">
+    <mat-form-field style="display: none" class="newBlogPostFullWidth">
+      <mat-label for="blogPostId">Id</mat-label>
+      <input matInput type="text" disabled name="blogPostId" id="blogPostId" value="{{blogPost.id}}" #blogPostId><br>
+    </mat-form-field>
+    <mat-form-field class="newBlogPostFullWidth">
+      <mat-label for="blogPostTitle">Title</mat-label>
+      <input matInput type="text" name="blogPostTitle" id="blogPostTitle" value="{{blogPost.title}}" #blogPostTitle><br>
+    </mat-form-field>
+    <mat-form-field class="newBlogPostFullWidth">
+      <mat-label for="blogPostText">Text</mat-label>
+      <input matInput type="text" name="blogPostText" id="blogPostText" value="{{blogPost.text}}" #blogPostText><br>
+    </mat-form-field>
+    <mat-form-field class="newBlogPostFullWidth">
+      <mat-label for="blogPostAuthor">Author</mat-label>
+      <input matInput type="text" name="blogPostAuthor" id="blogPostAuthor" value="{{blogPost.author}}" #blogPostAuthor><br>
+    </mat-form-field>
+    <mat-form-field class="newBlogPostFullWidth">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" [value]="date.value" #blogPostDate>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
 
-<button mat-button color="secundary" class="newBlogPostButtons" (click)="returnToRoot()">Cancel</button>
-<button mat-raised-button color="primary" class="newBlogPostButtons" (click)="createBlogPost()">Create</button>
+  <button mat-button color="secundary" class="newBlogPostButtons" (click)="returnToRoot()">Cancel</button>
+  <button mat-raised-button color="primary" class="newBlogPostButtons" (click)="saveBlogPost()">
+    <ng-container *ngIf="mode === 'add'">Create</ng-container>
+    <ng-container *ngIf="mode === 'edit'">Update</ng-container>
+  </button>
 
 </div>
