@@ -11,6 +11,13 @@ export class CreateBlogPost {
   }
 }
 
+export class UpdateBlogPost {
+  static readonly type = '[AppState] Update Blog Post';
+
+  constructor(public blogPost: BlogPost) {
+  }
+}
+
 export class DeleteBlogPost {
   static readonly type = '[AppState] Delete Blog Post';
 

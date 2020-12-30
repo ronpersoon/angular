@@ -25,6 +25,10 @@ export class BlogPostService {
     return of(blogPost);
   }
 
+  updateBlogPost(blogPost: BlogPost): Observable<any> {
+    return of(blogPost);
+  }
+
   deleteBlogPost(blogPostId: number): Observable<any> {
     return of(blogPostId);
   }

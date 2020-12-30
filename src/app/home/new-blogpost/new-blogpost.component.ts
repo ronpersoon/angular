@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CreateBlogPost} from '../../core/blogpost/blogpost.actions';
+import {CreateBlogPost, UpdateBlogPost} from '../../core/blogpost/blogpost.actions';
 import {Store} from '@ngxs/store';
 import {Router} from '@angular/router';
 import {get} from 'lodash';
@@ -43,17 +43,17 @@ export class NewBlogpostComponent implements OnInit {
       .pipe(
         pluck('blogPostId'),
         filter(blogPostId => !!blogPostId),
-        switchMap((blogPostId: string) => this.blogPostService.getBlogPost(+blogPostId)),
+        switchMap((blogPostId: string) => this.blogPostService.getBlogPost(parseInt(blogPostId, 10))),
       ).subscribe((details) => {
-        this.blogPost = details as BlogPost;
-        this.date = new FormControl(new Date(this.blogPost.date));
-        this.originalBlogPost = JSON.parse(JSON.stringify(details));
-      });
+      this.blogPost = details as BlogPost;
+      this.date = new FormControl(new Date(this.blogPost.date));
+      this.originalBlogPost = JSON.parse(JSON.stringify(details));
+    });
   }
 
   initBlogPost() {
     this.blogPost = {
-      id: 0,
+      id: Math.floor(Math.random() * 9999999) + 1,
       title: '',
       text: '',
       author: '',
@@ -63,7 +63,7 @@ export class NewBlogpostComponent implements OnInit {
 
   saveBlogPost() {
     this.blogPost = {
-      id: Math.floor(Math.random() * 9999999) + 1,
+      id: parseInt(this.blogPostId.nativeElement.value, 10),
       title: this.blogPostTitle.nativeElement.value,
       text: this.blogPostText.nativeElement.value,
       author: this.blogPostAuthor.nativeElement.value,
@@ -75,9 +75,9 @@ export class NewBlogpostComponent implements OnInit {
         this.returnToRoot();
       });
     } else {
-      // this.store.dispatch(new UpdateBlogPost(this.blogPost)).subscribe(() => {
-      //   this.returnToRoot();
-      // });
+      this.store.dispatch(new UpdateBlogPost(this.blogPost)).subscribe(() => {
+        this.returnToRoot();
+      });
     }
   }
 
