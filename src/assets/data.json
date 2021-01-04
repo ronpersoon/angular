@@ -4,13 +4,13 @@
     "title": "title1",
     "text": "text1",
     "author": "author1",
-    "date": "2020/11/04 12:00"
+    "date": "11/4/2020"
   },
   {
     "id": 2,
     "title": "title2",
     "text": "text2",
     "author": "author2",
-    "date": "2020/11/04 12:00"
+    "date": "11/4/2020"
   }
 ]

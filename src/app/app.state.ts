@@ -4,15 +4,18 @@ import {BlogPost} from './app.model';
 import {tap} from 'rxjs/operators';
 import {BlogPostService} from './core/blogpost/blogpost.service';
 import {CreateBlogPost, DeleteBlogPost, GetBlogPosts, UpdateBlogPost} from './core/blogpost/blogpost.actions';
+import { SetUnsavedChanges } from './app.actions';
 
 export interface AppStateModel {
   blogPosts: BlogPost[];
+  unsavedChanges: boolean;
 }
 
 @State<AppStateModel>({
   name: 'app',
   defaults: {
-    blogPosts: []
+    blogPosts: [],
+    unsavedChanges: false
   }
 })
 
@@ -46,6 +49,7 @@ export class AppState {
           newBlogPost
         ]
       });
+      ctx.dispatch(new SetUnsavedChanges(false));
     }));
   }
 
@@ -59,6 +63,7 @@ export class AppState {
       ctx.patchState({
         blogPosts: existingBlogPosts.map(b => b.id === updatedBlogPost.id ? updatedBlogPost : b),
       });
+      ctx.dispatch(new SetUnsavedChanges(false));
     }));
   }
 
@@ -74,8 +79,11 @@ export class AppState {
           ...updatedPosts
         ]
       });
-
-      // return updatedPosts;
     }));
+  }
+
+  @Action(SetUnsavedChanges)
+  setUnsavedChanges({ patchState }: StateContext<AppStateModel>, { unsavedChanges }: SetUnsavedChanges) {
+    return patchState({ unsavedChanges });
   }
 }

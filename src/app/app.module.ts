@@ -16,6 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,22 +25,23 @@ import {MatNativeDateModule} from '@angular/material/core';
     HomeComponent,
     NewBlogpostComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AppRoutingModule,
-    NgxsModule.forRoot([AppState], {
-      developmentMode: !environment.production
-    }),
-    BrowserAnimationsModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        AppRoutingModule,
+        NgxsModule.forRoot([AppState], {
+            developmentMode: !environment.production
+        }),
+        BrowserAnimationsModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

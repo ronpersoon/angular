@@ -3,19 +3,19 @@
   <form class="newBlogPostForm">
     <mat-form-field style="display: none" class="newBlogPostFullWidth">
       <mat-label for="blogPostId">Id</mat-label>
-      <input matInput type="text" disabled name="blogPostId" id="blogPostId" value="{{blogPost.id}}" #blogPostId><br>
+      <input matInput type="text" disabled name="blogPostId" id="blogPostId" [(ngModel)]="blogPost.id"><br>
     </mat-form-field>
     <mat-form-field class="newBlogPostFullWidth">
       <mat-label for="blogPostTitle">Title</mat-label>
-      <input matInput type="text" name="blogPostTitle" id="blogPostTitle" value="{{blogPost.title}}" #blogPostTitle><br>
+      <input matInput type="text" name="blogPostTitle" id="blogPostTitle" [(ngModel)]="blogPost.title"><br>
     </mat-form-field>
     <mat-form-field class="newBlogPostFullWidth">
       <mat-label for="blogPostText">Text</mat-label>
-      <input matInput type="text" name="blogPostText" id="blogPostText" value="{{blogPost.text}}" #blogPostText><br>
+      <input matInput type="text" name="blogPostText" id="blogPostText" [(ngModel)]="blogPost.text"><br>
     </mat-form-field>
     <mat-form-field class="newBlogPostFullWidth">
       <mat-label for="blogPostAuthor">Author</mat-label>
-      <input matInput type="text" name="blogPostAuthor" id="blogPostAuthor" value="{{blogPost.author}}" #blogPostAuthor><br>
+      <input matInput type="text" name="blogPostAuthor" id="blogPostAuthor" [(ngModel)]="blogPost.author"><br>
     </mat-form-field>
     <mat-form-field class="newBlogPostFullWidth">
       <mat-label>Choose a date</mat-label>
@@ -26,7 +26,7 @@
   </form>
 
   <button mat-button color="secundary" class="newBlogPostButtons" (click)="returnToRoot()">Cancel</button>
-  <button mat-raised-button color="primary" class="newBlogPostButtons" (click)="saveBlogPost()">
+  <button mat-raised-button color="primary" class="newBlogPostButtons" (click)="saveBlogPost()" [disabled]="cantBeSaved()">
     <ng-container *ngIf="mode === 'add'">Create</ng-container>
     <ng-container *ngIf="mode === 'edit'">Update</ng-container>
   </button>
