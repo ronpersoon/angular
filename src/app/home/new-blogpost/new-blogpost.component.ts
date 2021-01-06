@@ -17,17 +17,10 @@ import {SetUnsavedChanges} from '../../app.actions';
 export class NewBlogpostComponent implements OnInit {
 
   mode: string;
+  blogPost: BlogPost;
   originalBlogPost: BlogPost;
   hasUnsavedChanges = false;
   pickerDate = new Date();
-
-  blogPost: BlogPost = {
-    id: Math.floor(Math.random() * 9999999) + 1,
-    title: null,
-    text: null,
-    author: null,
-    date: this.getDateString(new Date())
-  };
 
   constructor(private store: Store,
               private router: Router,
@@ -40,9 +33,15 @@ export class NewBlogpostComponent implements OnInit {
     this.mode = get(this.route, 'routeConfig.data.mode', 'edit');
 
     if (this.mode === 'add') {
+      this.blogPost = {
+        id: Math.floor(Math.random() * 9999999) + 1,
+        title: null,
+        text: null,
+        author: null,
+        date: this.getDateString(new Date())
+      };
       this.originalBlogPost = JSON.parse(JSON.stringify(this.blogPost));
-    }
-    else if (this.mode === 'edit') {
+    } else if (this.mode === 'edit') {
       this.route.params
         .pipe(
           pluck('blogPostId'),
@@ -64,16 +63,8 @@ export class NewBlogpostComponent implements OnInit {
   }
 
   saveBlogPost() {
-
-    if (this.mode === 'add') {
-      this.store.dispatch(new CreateBlogPost(this.blogPost)).subscribe(() => {
-        this.returnToRoot();
-      });
-    } else {
-      this.store.dispatch(new UpdateBlogPost(this.blogPost)).subscribe(() => {
-        this.returnToRoot();
-      });
-    }
+    const Action = this.mode === 'add' ? CreateBlogPost : UpdateBlogPost;
+    this.store.dispatch(new Action(this.blogPost));
   }
 
   getDateString(date: Date) {

@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators';
 import {BlogPostService} from './core/blogpost/blogpost.service';
 import {CreateBlogPost, DeleteBlogPost, GetBlogPosts, UpdateBlogPost} from './core/blogpost/blogpost.actions';
 import { SetUnsavedChanges } from './app.actions';
+import {Navigate} from '@ngxs/router-plugin';
 
 export interface AppStateModel {
   blogPosts: BlogPost[];
@@ -50,6 +51,7 @@ export class AppState {
         ]
       });
       ctx.dispatch(new SetUnsavedChanges(false));
+      ctx.dispatch(new Navigate(['']));
     }));
   }
 
@@ -64,6 +66,7 @@ export class AppState {
         blogPosts: existingBlogPosts.map(b => b.id === updatedBlogPost.id ? updatedBlogPost : b),
       });
       ctx.dispatch(new SetUnsavedChanges(false));
+      ctx.dispatch(new Navigate(['']));
     }));
   }
 
