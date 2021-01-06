@@ -1,5 +1,6 @@
 <div id="newBlogPostContainer">
-  <h2>Create new blog post</h2>
+  <h2 *ngIf="mode === 'add'">Create new blog post</h2>
+  <h2 *ngIf="mode === 'edit'">Edit blog post</h2>
   <form class="newBlogPostForm">
     <mat-form-field style="display: none" class="newBlogPostFullWidth">
       <mat-label for="blogPostId">Id</mat-label>
@@ -18,8 +19,7 @@
       <input matInput type="text" name="blogPostAuthor" id="blogPostAuthor" [(ngModel)]="blogPost.author"><br>
     </mat-form-field>
     <mat-form-field class="newBlogPostFullWidth">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" [value]="date.value" #blogPostDate>
+      <input matInput #input="ngModel" [(ngModel)]="pickerDate" [matDatepicker]="picker" placeholder="Choose a date" name="blogPostDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

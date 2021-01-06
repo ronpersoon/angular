@@ -8,7 +8,6 @@ import {filter, pluck, switchMap} from 'rxjs/operators';
 import {BlogPost} from '../../app.model';
 import {BlogPostService} from '../../core/blogpost/blogpost.service';
 import {SetUnsavedChanges} from '../../app.actions';
-import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-new-blogpost',
@@ -17,19 +16,17 @@ import {FormControl} from '@angular/forms';
 })
 export class NewBlogpostComponent implements OnInit {
 
-  @ViewChild('blogPostDate') blogPostDate;
-
   mode: string;
-  originalBlogPost: string;
-  date = new FormControl(new Date());
+  originalBlogPost: BlogPost;
   hasUnsavedChanges = false;
+  pickerDate = new Date();
 
   blogPost: BlogPost = {
     id: Math.floor(Math.random() * 9999999) + 1,
     title: null,
     text: null,
     author: null,
-    date: null
+    date: this.getDateString(new Date())
   };
 
   constructor(private store: Store,
@@ -42,29 +39,31 @@ export class NewBlogpostComponent implements OnInit {
 
     this.mode = get(this.route, 'routeConfig.data.mode', 'edit');
 
-    this.route.params
-      .pipe(
-        pluck('blogPostId'),
-        filter(blogPostId => !!blogPostId),
-        switchMap((blogPostId: string) => this.blogPostService.getBlogPost(parseInt(blogPostId, 10))),
-      ).subscribe((details) => {
-
-      this.blogPost = {
-        id: details.id,
-        title: details.title,
-        text: details.text,
-        author: details.author,
-        date: details.date
-      };
-      this.date = new FormControl(new Date(details.date));
+    if (this.mode === 'add') {
       this.originalBlogPost = JSON.parse(JSON.stringify(this.blogPost));
-    });
+    }
+    else if (this.mode === 'edit') {
+      this.route.params
+        .pipe(
+          pluck('blogPostId'),
+          filter(blogPostId => !!blogPostId),
+          switchMap((blogPostId: string) => this.blogPostService.getBlogPost(parseInt(blogPostId, 10))),
+        ).subscribe((details) => {
+
+        this.blogPost = {
+          id: details.id,
+          title: details.title,
+          text: details.text,
+          author: details.author,
+          date: details.date
+        };
+        this.pickerDate = new Date(details.date);
+        this.originalBlogPost = JSON.parse(JSON.stringify(this.blogPost));
+      });
+    }
   }
 
   saveBlogPost() {
-
-    // restore date
-    this.blogPost.date = this.getFormDate();
 
     if (this.mode === 'add') {
       this.store.dispatch(new CreateBlogPost(this.blogPost)).subscribe(() => {
@@ -77,8 +76,11 @@ export class NewBlogpostComponent implements OnInit {
     }
   }
 
-  getFormDate() {
-    return this.blogPostDate ? this.blogPostDate.nativeElement.value : '';
+  getDateString(date: Date) {
+    if (!date) {
+      return null;
+    }
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
 
   returnToRoot() {
@@ -88,13 +90,18 @@ export class NewBlogpostComponent implements OnInit {
   cantBeSaved() {
     let cantBeSaved;
 
+    // set updated date in blogPost object
+    this.blogPost.date = this.getDateString(this.pickerDate);
+
     if (this.mode === 'add') {
+
       cantBeSaved = !this.blogPost.title || !this.blogPost.text ||
-        !this.blogPost.author;
+        !this.blogPost.author || !this.blogPost.date;
 
       const hasUC = !!this.blogPost.title
         || !!this.blogPost.text
-        || !!this.blogPost.author;
+        || !!this.blogPost.author
+        || this.blogPost.date !== this.originalBlogPost.date;
 
       if (hasUC !== this.hasUnsavedChanges) {
         this.store.dispatch(new SetUnsavedChanges(hasUC));
@@ -102,13 +109,6 @@ export class NewBlogpostComponent implements OnInit {
       }
 
     } else if (this.mode === 'edit') {
-
-      // restore date
-      const formDate = this.getFormDate();
-      if (formDate === '') {
-        return false;
-      }
-      this.blogPost.date = formDate;
 
       cantBeSaved = JSON.stringify(this.blogPost) === JSON.stringify(this.originalBlogPost);
       const hasUC = !cantBeSaved;
